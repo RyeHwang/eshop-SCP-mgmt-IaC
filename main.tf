@@ -12,16 +12,20 @@ resource "scp_security_group" "admin_sg" {
   description  = "eshop management admin server security group"
 }
 
+resource "scp_security_group" "mgmt_cluster_sg" {
+  vpc_id       = scp_vpc.mgmt_vpc.id
+  name         = "eshopMgmtClSG"
+  description  = "eshop management admin server security group"
+}
+
+
 resource "scp_security_group_rule" "admin_rule_tcp" {
     security_group_id = scp_security_group.admin_sg.id 
 #    source_security_group_id = scp_security_group.bastion_sg.id 
     direction         = "in"
     description       = "ssh SG rule generated from Terraform"
     addresses_ipv4 = ["10.0.1.0/24"]
-    service { 
-        type = "tcp" 
-        value = 22
-    }
+    service { type = "all" }
 }
 
 resource "scp_security_group_rule" "admin_rule_all" {
@@ -29,14 +33,19 @@ resource "scp_security_group_rule" "admin_rule_all" {
     direction         = "out"
     description       = "SG out rule generated from Terraform"
     addresses_ipv4 = ["0.0.0.0/0"]
-    service { 
-        type = "tcp" 
-        value = 22
-    }
+    service { type = "all" }
 }
 
 resource "scp_security_group_rule" "bastion_rule_all" {
     security_group_id = scp_security_group.bastion_sg.id 
+    direction         = "out"
+    description       = "SG out rule generated from Terraform"
+    addresses_ipv4 = ["0.0.0.0/0"]
+    service { type = "all" }
+}
+
+resource "scp_security_group_rule" "mgmt_cluster_rule_all" {
+    security_group_id = scp_security_group.mgmt_cluster_sg.id 
     direction         = "out"
     description       = "SG out rule generated from Terraform"
     addresses_ipv4 = ["0.0.0.0/0"]
