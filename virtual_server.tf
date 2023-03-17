@@ -8,9 +8,9 @@ data "scp_standard_image" "ubuntu_image" {
     }
 }
 resource "scp_virtual_server" "bastion" {
-    //name_prefix         = "eshopbastion"   
-    //timezone            = "Asia/Seoul"     
-    virtual_server_name = "eshopbastion"
+    //name_prefix         = "eshopbastion"   # will be rolled back after v1.8.6
+    //timezone            = "Asia/Seoul"     # will be rolled back after v1.8.6
+    virtual_server_name = "eshopbastion"     # will be deleted after v1.8.6
     admin_account       = "root"
     admin_password      = var.bastion_password
     cpu_count           = 2
@@ -48,9 +48,9 @@ resource "scp_nat_gateway" "mgmt_nat" {
 }
 
 resource "scp_virtual_server" "admin" {
-    virtual_server_name = "eshopadmin"
-    //name_prefix         = "eshopadmin"   # not in manual. newly updated
-    //timezone            = "Asia/Seoul"       # not in maunal. newly updated
+    //name_prefix         = "eshopadmin"   # will be rolled back after v1.8.6 
+    //timezone            = "Asia/Seoul"   # will be rolled back after v1.8.6
+    virtual_server_name = "eshopadmin"     # will be deleted after v1.8.6 
     admin_account       = "root"
     admin_password      = var.admin_password
     cpu_count           = 2
