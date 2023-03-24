@@ -38,7 +38,7 @@ resource "scp_virtual_server" "bastion" {
 
 resource "scp_public_ip" "bastion_ip" {
     description = "Public IP generated from Terraform"
-    region      = data.scp_region.region.location
+    region      = var.region
 }
 
 resource "scp_nat_gateway" "mgmt_nat" {

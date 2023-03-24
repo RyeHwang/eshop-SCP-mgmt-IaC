@@ -16,7 +16,7 @@ resource "scp_file_storage" "mgmt_nfs" {
     protocol           = "NFS"
     is_encrypted       = false
     retention_count    = 2
-    region             = data.scp_region.region.location
+    region             = var.region
 }
 
 resource "scp_load_balancer" "mgmt_lb" {
