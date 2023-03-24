@@ -24,7 +24,7 @@ resource "scp_subnet" "private" {
   cidr_ipv4    = "10.0.11.0/24"
   description  = "private subnet generated from Terraform"
 
-  depends_on    = [scp_vpc.mgmt_vpc]
+  depends_on    = [scp_internet_gateway.mgmt_igw]
 }
 
 resource "scp_internet_gateway" "mgmt_igw" {
