@@ -9,3 +9,10 @@ variable "admin_password" {
     type = string
     description = "admin server default password"
 }
+
+variable "region" {
+    default = "KR-EAST-1"
+    type = string
+    description = "region for management cluster"
+}
+
