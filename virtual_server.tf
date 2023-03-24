@@ -1,10 +1,13 @@
-data "scp_standard_image" "ubuntu_image" {
+data "scp_standard_image" "ubuntu_image_vm" {
     service_group = "COMPUTE"
     service       = "Virtual Server"
-    region        = data.scp_region.region.location
+    //region        = data.scp_region.region.location
+    //region        = var.region
+    region        = "KR-EAST-1"
     filter {
         name = "image_name"
-        values = ["Ubuntu 20.04"]
+        values = ["Ubuntu 18.04"]
+        use_regex = true
     }
 }
 resource "scp_virtual_server" "bastion" {
@@ -15,7 +18,7 @@ resource "scp_virtual_server" "bastion" {
     admin_password      = var.bastion_password
     cpu_count           = 2
     memory_size_gb      = 4
-    image_id            = data.scp_standard_image.ubuntu_image.id
+    image_id            = data.scp_standard_image.ubuntu_image_vm.id
     vpc_id              = scp_vpc.mgmt_vpc.id
     subnet_id           = scp_subnet.public.id
 
@@ -55,7 +58,7 @@ resource "scp_virtual_server" "admin" {
     admin_password      = var.admin_password
     cpu_count           = 2
     memory_size_gb      = 4
-    image_id            = data.scp_standard_image.ubuntu_image.id
+    image_id            = data.scp_standard_image.ubuntu_image_vm.id
     vpc_id              = scp_vpc.mgmt_vpc.id
     subnet_id           = scp_subnet.private.id
 
@@ -86,6 +89,12 @@ echo 'source <(kubectl completion bash)' >> /root/.bashrc
 echo 'alias k=kubectl' >> /root/.bashrc
 echo 'complete -F __start_kubectl k' >> /root/.bashrc    
 
+# alias 추가
+alias mc='kubectl config use-context mgmt'
+alias ec='kubectl config use-context eshop'
+
+# WhereAmI
+alias wai='kubectl config get-contexts'	
 EOF
 
     security_group_ids = [

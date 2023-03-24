@@ -1,7 +1,8 @@
-data "scp_standard_image" "ubuntu_node_image" {
+data "scp_standard_image" "ubuntu_image_k8s" {
     service_group      = "CONTAINER"
     service            = "Kubernetes Engine VM"
-    region             = data.scp_region.region.location
+    //region        = data.scp_region.region.location
+    region             = var.region
 
     filter {
         name           = "image_name"
@@ -45,7 +46,7 @@ resource "scp_kubernetes_engine" "mgmt_cluster" {
 resource "scp_kubernetes_node_pool" "pool" {
     name               = "eshop-mgmt-node"
     engine_id          = scp_kubernetes_engine.mgmt_cluster.id
-    image_id           = data.scp_standard_image.ubuntu_node_image.id
+    image_id           = data.scp_standard_image.ubuntu_image_k8s.id
     
     cpu_count          = 2
     memory_size_gb     = 4

@@ -17,3 +17,7 @@ output "bastion_nat_ip" {
 output "admin_ip" {
     value = scp_virtual_server.admin.ipv4
 }
+
+output "region" {
+    value =  data.scp_region.my_region.location
+}
