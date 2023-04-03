@@ -6,7 +6,7 @@ data "scp_standard_image" "ubuntu_image_vm" {
     region        = "KR-EAST-1"
     filter {
         name = "image_name"
-        values = ["Ubuntu 18.04"]
+        values = ["Ubuntu 18.04"] # 20.04 for KR-EAST-1 is making some not found error
         use_regex = true
     }
 }
@@ -90,11 +90,11 @@ echo 'alias k=kubectl' >> /root/.bashrc
 echo 'complete -F __start_kubectl k' >> /root/.bashrc    
 
 # alias 추가
-alias mc='kubectl config use-context mgmt'
-alias ec='kubectl config use-context eshop'
+alias mc='kubectl config use-context mgmt' >> /root/.bashrc
+alias ec='kubectl config use-context eshop' >> /root/.bashrc
 
 # WhereAmI
-alias wai='kubectl config get-contexts'	
+alias wai='kubectl config get-contexts'	>> /root/.bashrc
 EOF
 
     security_group_ids = [

@@ -62,6 +62,18 @@ resource "scp_security_group_rule" "bastion_rule_tcp" {
         value = 80
     }
 }
+#### argo rollout 을 위해 추가되는 부분 (검토 필요) ######
+resource "scp_security_group_rule" "bastion-argo-rollout" {
+    security_group_id = scp_security_group.bastion_sg.id 
+    direction         = "in"
+    description       = "TCP argo rollout SG rule generated from Terraform"
+    addresses_ipv4 = ["0.0.0.0/0"]
+    service { 
+        type = "tcp" 
+        value = 3100
+    }
+}
+#############
 
 resource "scp_security_group_rule" "bastion_rule_ssh" {
     security_group_id = scp_security_group.bastion_sg.id 
