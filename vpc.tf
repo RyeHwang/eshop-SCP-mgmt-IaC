@@ -3,7 +3,6 @@ data "scp_region" "my_region" {}
 resource "scp_vpc" "mgmt_vpc" {
   name         = "eshopMgmtVpc"
   description  = "Vpc generated from Terraform"
-  //region       = data.scp_region.my_region.location
   region       = var.region
 }
 
@@ -11,10 +10,16 @@ resource "scp_subnet" "public" {
   vpc_id       = scp_vpc.mgmt_vpc.id
   name         = "eshopMgmtPuSubnet"
   type         = "PUBLIC"
-  cidr_ipv4    = "10.0.1.0/24"
+  cidr_ipv4    = "10.0.10.0/24"
   description  = "public subnet generated from Terraform"
 
-  depends_on    = [scp_vpc.mgmt_vpc]
+  depends_on    = [scp_nat_gateway.mgmt_nat]
+}
+
+resource "scp_nat_gateway" "mgmt_nat" {
+    subnet_id = scp_subnet.private.id
+    #public_ip_id = 
+    description = "NAT GW from Terraform"
 }
 
 resource "scp_subnet" "private" {

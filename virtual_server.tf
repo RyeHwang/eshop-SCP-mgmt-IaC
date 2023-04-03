@@ -1,23 +1,21 @@
 data "scp_standard_image" "ubuntu_image_vm" {
     service_group = "COMPUTE"
     service       = "Virtual Server"
-    //region        = data.scp_region.region.location
-    //region        = var.region
-    region        = "KR-EAST-1"
+    region        = var.region
     filter {
         name = "image_name"
-        values = ["Ubuntu 18.04"] # 20.04 for KR-EAST-1 is making some not found error
+        values = ["Ubuntu 20.04"] 
         use_regex = true
     }
 }
 resource "scp_virtual_server" "bastion" {
-    //name_prefix         = "eshopbastion"   # will be rolled back after v1.8.6
+    //name_prefix         = "eshop-bastion"   # will be rolled back after v1.8.6
     //timezone            = "Asia/Seoul"     # will be rolled back after v1.8.6
-    virtual_server_name = "eshopbastion"     # will be deleted after v1.8.6
+    virtual_server_name = "eshop-bastion"     # will be deleted after v1.8.6
     admin_account       = "root"
     admin_password      = var.bastion_password
-    cpu_count           = 2
-    memory_size_gb      = 4
+    cpu_count           = 1
+    memory_size_gb      = 2
     image_id            = data.scp_standard_image.ubuntu_image_vm.id
     vpc_id              = scp_vpc.mgmt_vpc.id
     subnet_id           = scp_subnet.public.id
@@ -35,8 +33,6 @@ resource "scp_virtual_server" "bastion" {
         scp_security_group.bastion_sg.id 
     ]
     use_dns = true
-
-    depends_on          = [scp_public_ip.bastion_ip]
 }
 
 resource "scp_public_ip" "bastion_ip" {
@@ -44,16 +40,10 @@ resource "scp_public_ip" "bastion_ip" {
     region      = var.region
 }
 
-resource "scp_nat_gateway" "mgmt_nat" {
-    subnet_id = scp_subnet.private.id
-    #public_ip_id = 
-    description = "NAT GW from Terraform"
-}
-
 resource "scp_virtual_server" "admin" {
-    //name_prefix         = "eshopadmin"   # will be rolled back after v1.8.6 
+    //name_prefix         = "eshop-admin"   # will be rolled back after v1.8.6 
     //timezone            = "Asia/Seoul"   # will be rolled back after v1.8.6
-    virtual_server_name = "eshopadmin"     # will be deleted after v1.8.6 
+    virtual_server_name = "eshop-admin"     # will be deleted after v1.8.6 
     admin_account       = "root"
     admin_password      = var.admin_password
     cpu_count           = 2
@@ -73,26 +63,20 @@ resource "scp_virtual_server" "admin" {
 # kubectl 설치
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
-
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
-
 # alias 설정
 echo 'alias cls=clear' >> /root/.bashrc
 echo 'export PATH=$PATH:/home/root/bin' >> /root/.bashrc
-
 echo 'source <(kubectl completion bash)' >> /root/.bashrc
 echo 'alias k=kubectl' >> /root/.bashrc
 echo 'complete -F __start_kubectl k' >> /root/.bashrc    
-
 # alias 추가
 alias mc='kubectl config use-context mgmt' >> /root/.bashrc
 alias ec='kubectl config use-context eshop' >> /root/.bashrc
-
 # WhereAmI
 alias wai='kubectl config get-contexts'	>> /root/.bashrc
 EOF
