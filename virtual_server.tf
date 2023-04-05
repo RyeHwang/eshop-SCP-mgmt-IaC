@@ -2,7 +2,6 @@ data "scp_standard_image" "ubuntu_image_vm" {
     service_group = "COMPUTE"
     service       = "Virtual Server"
     region        = var.region
-    region        = var.region
     filter {
         name = "image_name"
         values = ["Ubuntu 20.04"]
