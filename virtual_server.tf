@@ -75,10 +75,10 @@ echo 'source <(kubectl completion bash)' >> /root/.bashrc
 echo 'alias k=kubectl' >> /root/.bashrc
 echo 'complete -F __start_kubectl k' >> /root/.bashrc    
 # alias 추가
-echo alias mc='kubectl config use-context mgmt' >> /root/.bashrc
-echo alias ec='kubectl config use-context eshop' >> /root/.bashrc
+echo 'alias mc="kubectl config use-context mgmt"' >> /root/.bashrc
+echo 'alias ec="kubectl config use-context eshop"' >> /root/.bashrc
 # WhereAmI
-echo alias wai='kubectl config get-contexts' >> /root/.bashrc
+echo 'alias wai="kubectl config get-contexts"' >> /root/.bashrc
 EOF
 
     security_group_ids = [

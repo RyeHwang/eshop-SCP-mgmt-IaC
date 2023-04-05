@@ -11,7 +11,7 @@ variable "admin_password" {
 }
 
 variable "region" {
-    default = "KR-WEST-2"
+    default = "KR-EAST-1"
     type = string
     description = "region for management cluster"
 }
