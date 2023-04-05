@@ -9,9 +9,9 @@ data "scp_standard_image" "ubuntu_image_vm" {
     }
 }
 resource "scp_virtual_server" "bastion" {
-    //name_prefix         = "eshop-bastion"   # will be rolled back after v1.8.6
+    //name_prefix         = "eshopbastion"   # will be rolled back after v1.8.6
     //timezone            = "Asia/Seoul"     # will be rolled back after v1.8.6
-    virtual_server_name = "eshop-bastion"     # will be deleted after v1.8.6
+    virtual_server_name = "eshopbastion"     # will be deleted after v1.8.6
     admin_account       = "root"
     admin_password      = var.bastion_password
     cpu_count           = 1
@@ -41,9 +41,9 @@ resource "scp_public_ip" "bastion_ip" {
 }
 
 resource "scp_virtual_server" "admin" {
-    //name_prefix         = "eshop-admin"   # will be rolled back after v1.8.6 
+    //name_prefix         = "eshopadmin"   # will be rolled back after v1.8.6 
     //timezone            = "Asia/Seoul"   # will be rolled back after v1.8.6
-    virtual_server_name = "eshop-admin"     # will be deleted after v1.8.6 
+    virtual_server_name = "eshopadmin"     # will be deleted after v1.8.6 
     admin_account       = "root"
     admin_password      = var.admin_password
     cpu_count           = 2
@@ -75,10 +75,10 @@ echo 'source <(kubectl completion bash)' >> /root/.bashrc
 echo 'alias k=kubectl' >> /root/.bashrc
 echo 'complete -F __start_kubectl k' >> /root/.bashrc    
 # alias 추가
-alias mc='kubectl config use-context mgmt' >> /root/.bashrc
-alias ec='kubectl config use-context eshop' >> /root/.bashrc
+echo alias mc='kubectl config use-context mgmt' >> /root/.bashrc
+echo alias ec='kubectl config use-context eshop' >> /root/.bashrc
 # WhereAmI
-alias wai='kubectl config get-contexts'	>> /root/.bashrc
+echo alias wai='kubectl config get-contexts' >> /root/.bashrc
 EOF
 
     security_group_ids = [

@@ -24,7 +24,7 @@ resource "scp_security_group_rule" "admin_rule_tcp" {
 #    source_security_group_id = scp_security_group.bastion_sg.id 
     direction         = "in"
     description       = "ssh SG rule generated from Terraform"
-    addresses_ipv4 = ["10.0.1.0/24"]
+    addresses_ipv4 = ["10.0.10.0/24"]
     service { type = "all" }
 }
 
