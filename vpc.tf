@@ -3,7 +3,6 @@ data "scp_region" "my_region" {}
 resource "scp_vpc" "mgmt_vpc" {
   name         = "eshopMgmtVpc"
   description  = "Vpc generated from Terraform"
-  //region       = data.scp_region.my_region.location
   region       = var.region
 }
 

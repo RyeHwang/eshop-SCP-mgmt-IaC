@@ -1,12 +1,10 @@
 data "scp_standard_image" "ubuntu_image_vm" {
     service_group = "COMPUTE"
     service       = "Virtual Server"
-    //region        = data.scp_region.region.location
-    //region        = var.region
-    region        = "KR-EAST-1"
+    region        = var.region
     filter {
         name = "image_name"
-        values = ["Ubuntu 18.04"]
+        values = ["Ubuntu 20.04"]
         use_regex = true
     }
 }

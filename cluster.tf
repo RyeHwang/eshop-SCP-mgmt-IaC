@@ -1,7 +1,6 @@
 data "scp_standard_image" "ubuntu_image_k8s" {
     service_group      = "CONTAINER"
     service            = "Kubernetes Engine VM"
-    //region        = data.scp_region.region.location
     region             = var.region
 
     filter {
