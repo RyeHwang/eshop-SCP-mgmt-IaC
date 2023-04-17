@@ -21,7 +21,6 @@ resource "scp_security_group" "mgmt_cluster_sg" {
 
 resource "scp_security_group_rule" "admin_rule_tcp" {
     security_group_id = scp_security_group.admin_sg.id 
-#    source_security_group_id = scp_security_group.bastion_sg.id 
     direction         = "in"
     description       = "ssh SG rule generated from Terraform"
     addresses_ipv4 = ["10.0.10.0/24"]
@@ -62,19 +61,6 @@ resource "scp_security_group_rule" "bastion_rule_tcp" {
         value = 80
     }
 }
-#### argo rollout 을 위해 추가되는 부분 (검토 필요) ######
-resource "scp_security_group_rule" "bastion-argo-rollout" {
-    security_group_id = scp_security_group.bastion_sg.id 
-    direction         = "in"
-    description       = "TCP argo rollout SG rule generated from Terraform"
-    addresses_ipv4 = ["0.0.0.0/0"]
-    service { 
-        type = "tcp" 
-        value = 3100
-    }
-}
-#############
-
 resource "scp_security_group_rule" "bastion_rule_ssh" {
     security_group_id = scp_security_group.bastion_sg.id 
     direction         = "in"
@@ -88,3 +74,29 @@ resource "scp_security_group_rule" "bastion_rule_ssh" {
         value = 22
     }
 }
+
+#### argo rollout 을 위해 추가되는 부분 ######
+# resource "scp_security_group_rule" "bastion-argo-rollout" {
+#     security_group_id = scp_security_group.bastion_sg.id 
+#     direction         = "in"
+#     description       = "TCP argo rollout SG rule generated from Terraform"
+#     addresses_ipv4 = ["0.0.0.0/0"]
+#     service { 
+#         type = "tcp" 
+#         value = 3100
+#     }
+# }
+#############
+
+#### VPC Peering 을 위해 추가되는 부분 ######
+resource "scp_security_group_rule" "admin_rule_peering" {
+    security_group_id = scp_security_group.admin_sg.id 
+    direction         = "in"
+    description       = "ssh SG rule generated from Terraform"
+    addresses_ipv4 = ["192.168.0.0/24"]
+    service { 
+        type = "tcp" 
+        value = 22
+    }
+}
+#############
