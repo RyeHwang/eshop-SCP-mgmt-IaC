@@ -89,14 +89,14 @@ resource "scp_security_group_rule" "bastion_rule_ssh" {
 #############
 
 #### VPC Peering 을 위해 추가되는 부분 ######
-resource "scp_security_group_rule" "admin_rule_peering" {
-    security_group_id = scp_security_group.admin_sg.id 
-    direction         = "in"
-    description       = "ssh SG rule generated from Terraform"
-    addresses_ipv4 = ["192.168.0.0/24"]
-    service { 
-        type = "tcp" 
-        value = 22
-    }
-}
+# resource "scp_security_group_rule" "admin_rule_peering" {
+#     security_group_id = scp_security_group.admin_sg.id 
+#     direction         = "in"
+#     description       = "ssh SG rule generated from Terraform"
+#     addresses_ipv4 = ["192.168.0.0/24"]
+#     service { 
+#         type = "tcp" 
+#         value = 22
+#     }
+# }
 #############

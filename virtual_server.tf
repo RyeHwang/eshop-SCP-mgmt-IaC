@@ -69,16 +69,16 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 # alias 설정
-echo 'alias cls=clear' >> /root/.bashrc
-echo 'export PATH=$PATH:/home/root/bin' >> /root/.bashrc
-echo 'source <(kubectl completion bash)' >> /root/.bashrc
-echo 'alias k=kubectl' >> /root/.bashrc
-echo 'complete -F __start_kubectl k' >> /root/.bashrc    
+echo 'alias cls=clear' >> /ubuntu/.bashrc
+echo 'export PATH=$PATH:/home/root/bin' >> /ubuntu/.bashrc
+echo 'source <(kubectl completion bash)' >> /ubuntu/.bashrc
+echo 'alias k=kubectl' >> /ubuntu/.bashrc
+echo 'complete -F __start_kubectl k' >> /ubuntu/.bashrc    
 # alias 추가
-echo 'alias mc="kubectl config use-context mgmt"' >> /root/.bashrc
-echo 'alias ec="kubectl config use-context eshop"' >> /root/.bashrc
+echo 'alias mc="kubectl config use-context mgmt"' >> /ubuntu/.bashrc
+echo 'alias ec="kubectl config use-context eshop"' >> /ubuntu/.bashrc
 # WhereAmI
-echo 'alias wai="kubectl config get-contexts"' >> /root/.bashrc
+echo 'alias wai="kubectl config get-contexts"' >> /ubuntu/.bashrc
 EOF
 
     security_group_ids = [

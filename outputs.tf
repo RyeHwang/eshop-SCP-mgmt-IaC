@@ -19,5 +19,5 @@ output "admin_ip" {
 }
 
 output "region" {
-    value =  data.scp_region.my_region.location
+    value =  var.region
 }
