@@ -70,7 +70,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 # alias 설정
 echo 'alias cls=clear' >> /ubuntu/.bashrc
-echo 'export PATH=$PATH:/home/root/bin' >> /ubuntu/.bashrc
+echo 'export PATH=$PATH:/home/ubuntu/bin' >> /ubuntu/.bashrc
 echo 'source <(kubectl completion bash)' >> /ubuntu/.bashrc
 echo 'alias k=kubectl' >> /ubuntu/.bashrc
 echo 'complete -F __start_kubectl k' >> /ubuntu/.bashrc    
@@ -79,6 +79,8 @@ echo 'alias mc="kubectl config use-context mgmt"' >> /ubuntu/.bashrc
 echo 'alias ec="kubectl config use-context eshop"' >> /ubuntu/.bashrc
 # WhereAmI
 echo 'alias wai="kubectl config get-contexts"' >> /ubuntu/.bashrc
+# ubuntu sudoers 추가
+sudo echo 'ubuntu ALL=NOPASSWD:ALL' >> /etc/sudoers
 EOF
 
     security_group_ids = [
